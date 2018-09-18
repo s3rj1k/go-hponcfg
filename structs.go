@@ -78,7 +78,7 @@ type NIC struct {
 	} `xml:"STATUS"`
 	ILO struct {
 		Value bool `xml:"-"`
-	}
+	} `xml:"-"`
 }
 
 // Processor - CPU information
