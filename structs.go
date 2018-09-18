@@ -454,6 +454,13 @@ type Controller struct {
 	LogicalDrive   []*LogicalDrive   `xml:"LOGICAL_DRIVE,omitempty"`
 }
 
+// GetFWVersion - we use this to get missing info for BMC type and License type
+type GetFWVersion struct {
+	XMLName             xml.Name `xml:"GET_FW_VERSION"`
+	ManagementProcessor string   `xml:"MANAGEMENT_PROCESSOR,attr"`
+	LicenseType         string   `xml:"LICENSE_TYPE,attr"`
+}
+
 // GetEmbeddedHealthData - HP health data details
 type GetEmbeddedHealthData struct {
 	XMLName    xml.Name `xml:"GET_EMBEDDED_HEALTH_DATA"`

@@ -21,7 +21,39 @@ func GetHPOnCfgHealthXML() ([]byte, error) {
 				</SERVER_INFO>
 			</LOGIN>
 		</RIBCL>
-  	`)
+	`)
+
+	// syscall magic
+	cmd.SysProcAttr = &syscall.SysProcAttr{
+		Setpgid:   true,
+		Pdeathsig: syscall.SIGKILL,
+	}
+
+	// run command and capture output
+	out, err := cmd.CombinedOutput()
+	if err != nil {
+		return []byte{}, err
+	}
+
+	return out, nil
+}
+
+// GetHPOnCfgBMCXML - run hponcfg and get GET_FW_VERSION data from STDOUT (only BMC related data)
+func GetHPOnCfgBMCXML() ([]byte, error) {
+
+	// command to run
+	cmd := exec.Command("hponcfg", "-i")
+
+	// stdin for hponcfg, GET_FW_VERSION
+	cmd.Stdin = strings.NewReader(`
+		<RIBCL VERSION="2.22">
+			<LOGIN USER_LOGIN="Administrator" PASSWORD="">
+				<RIB_INFO MODE="read">
+					<GET_FW_VERSION/>
+				</RIB_INFO>
+			</LOGIN>
+		</RIBCL>
+	`)
 
 	// syscall magic
 	cmd.SysProcAttr = &syscall.SysProcAttr{
