@@ -16,14 +16,14 @@ func GetHPOnCfgHealthXML() ([]byte, error) {
 
 	// stdin for hponcfg, GET_EMBEDDED_HEALTH
 	cmd.Stdin = strings.NewReader(`
-    <RIBCL VERSION="2.22">
-      <LOGIN USER_LOGIN="Administrator" PASSWORD="">
-        <SERVER_INFO MODE="read">
-          <GET_EMBEDDED_HEALTH/>
-        </SERVER_INFO>
-      </LOGIN>
-    </RIBCL>
-  `)
+		<RIBCL VERSION="2.22">
+			<LOGIN USER_LOGIN="Administrator" PASSWORD="">
+				<SERVER_INFO MODE="read">
+					<GET_EMBEDDED_HEALTH/>
+				</SERVER_INFO>
+			</LOGIN>
+		</RIBCL>
+  	`)
 
 	// syscall magic
 	cmd.SysProcAttr = &syscall.SysProcAttr{
