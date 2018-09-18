@@ -1,8 +1,6 @@
 package hponcfg
 
 import (
-	"bufio"
-	"bytes"
 	"os/exec"
 	"strings"
 	"syscall"
@@ -37,28 +35,5 @@ func GetHPOnCfgHealthXML() ([]byte, error) {
 		return []byte{}, err
 	}
 
-	// convert output to scanner
-	scanner := bufio.NewScanner(
-		bytes.NewReader(out),
-	)
-
-	// filtered raw XML
-	xml := make([]byte, 0)
-
-	// loop-over lines
-	for scanner.Scan() {
-		// get current line
-		line := bytes.TrimSpace(scanner.Bytes())
-		// check if line begins with XML
-		if bytes.HasPrefix(line, []byte("<")) {
-			xml = append(xml, line...)
-		}
-	}
-
-	// if scanner fails, return error
-	if err := scanner.Err(); err != nil {
-		return []byte{}, err
-	}
-
-	return xml, nil
+	return out, nil
 }
