@@ -161,6 +161,8 @@ func GetHealthData(data []byte) (GetEmbeddedHealthData, error) {
 	// process ilo
 	if healthData.NICInformation.ILO != nil {
 		healthData.NICInformation.ILO.ILO.Value = true
+		// add to merged slice
+		healthData.NICInformation.Merged = append(healthData.NICInformation.Merged, healthData.NICInformation.ILO)
 	}
 
 	// process nics
@@ -169,11 +171,9 @@ func GetHealthData(data []byte) (GetEmbeddedHealthData, error) {
 			if strings.Contains(strings.ToLower(nic.PortDescription.Value), "ilo") {
 				nic.ILO.Value = true
 			}
-		}
 
-		// add ilo to nics array
-		if healthData.NICInformation.ILO != nil {
-			healthData.NICInformation.NICs = append(healthData.NICInformation.NICs, healthData.NICInformation.ILO)
+			// add to merged slice
+			healthData.NICInformation.Merged = append(healthData.NICInformation.Merged, nic)
 		}
 	}
 

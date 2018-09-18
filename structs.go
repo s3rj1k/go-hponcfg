@@ -484,8 +484,9 @@ type GetEmbeddedHealthData struct {
 		} `xml:"MEMORY_DETAILS,omitempty"`
 	} `xml:"MEMORY,omitempty"`
 	NICInformation struct {
-		ILO  *NIC   `xml:"iLO,omitempty"`
-		NICs []*NIC `xml:"NIC,omitempty"`
+		ILO    *NIC   `xml:"iLO,omitempty"`
+		NICs   []*NIC `xml:"NIC,omitempty"`
+		Merged []*NIC `xml:"-"`
 	} `xml:"NIC_INFORMATION,omitempty"`
 	FirmwareInformation struct {
 		Index []*Firmware `xml:"INDEX,omitempty"`
