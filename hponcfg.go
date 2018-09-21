@@ -107,7 +107,7 @@ func FactoryDefaults() ([]byte, error) {
 }
 
 // SendXMLToHPOnCfg - resets BMC to factory default config using hponcfg
-func (data []byte) SendXMLToHPOnCfg() ([]byte, error) {
+func SendXMLToHPOnCfg(data []byte) ([]byte, error) {
 
 	// command to run
 	cmd := exec.Command("hponcfg", "-i")
