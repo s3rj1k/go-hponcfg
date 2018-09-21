@@ -1,6 +1,7 @@
 package hponcfg
 
 import (
+	"bytes"
 	"os/exec"
 	"strings"
 	"syscall"
@@ -86,6 +87,30 @@ func FactoryDefaults() ([]byte, error) {
 			</LOGIN>
 		</RIBCL>
 	`)
+
+	// syscall magic
+	cmd.SysProcAttr = &syscall.SysProcAttr{
+		Setpgid:   true,
+		Pdeathsig: syscall.SIGKILL,
+	}
+
+	// run command and capture output
+	out, err := cmd.CombinedOutput()
+	if err != nil {
+		return []byte{}, err
+	}
+
+	return out, nil
+}
+
+// SendXMLToHPOnCfg - resets BMC to factory default config using hponcfg
+func (data []byte) SendXMLToHPOnCfg() ([]byte, error) {
+
+	// command to run
+	cmd := exec.Command("hponcfg", "-i")
+
+	// stdin for hponcfg
+	cmd.Stdin = bytes.NewReader(data)
 
 	// syscall magic
 	cmd.SysProcAttr = &syscall.SysProcAttr{
