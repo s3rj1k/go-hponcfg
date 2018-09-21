@@ -1,7 +1,6 @@
 package hponcfg
 
 import (
-	"bufio"
 	"bytes"
 	"fmt"
 	"os"
@@ -131,7 +130,7 @@ func SendXMLToHPOnCfg(data []byte) ([]byte, error) {
 }
 
 // FlashFirmware - flashes firmware using hponcfg
-func FlashFirmware(printToStdout, isILO bool, firmware string) error {
+func FlashFirmware(isILO bool, firmware string) error {
 
 	xml := `
 		<RIBCL VERSION="2.0">
@@ -151,44 +150,27 @@ func FlashFirmware(printToStdout, isILO bool, firmware string) error {
 		}
 	}
 
-	// command to run
-	cmd := exec.Command("hponcfg", "-i")
-
 	if isILO {
 		xml = strings.Replace(
 			xml,
 			"### REPLACE ###",
-			fmt.Sprint("<UPDATE_RIB_FIRMWARE IMAGE_LOCATION=\"%s\"/>", firmware),
+			fmt.Sprintf("<UPDATE_RIB_FIRMWARE IMAGE_LOCATION=\"%s\"/>", firmware),
 			1,
 		)
 	} else {
 		xml = strings.Replace(
 			xml,
 			"### REPLACE ###",
-			fmt.Sprint("<UPDATE_FIRMWARE IMAGE_LOCATION=\"%s\"/>", firmware),
+			fmt.Sprintf("<UPDATE_FIRMWARE IMAGE_LOCATION=\"%s\"/>", firmware),
 			1,
 		)
 	}
 
-	if printToStdout {
+	// command to run
+	cmd := exec.Command("hponcfg", "-i")
 
-		// set stdout pipe
-		cmdReader, err := cmd.StdoutPipe()
-		if err != nil {
-			return fmt.Errorf("failed to set stdout pipe")
-		}
-
-		// set scanner for cmd output
-		scanner := bufio.NewScanner(cmdReader)
-
-		// print lines to stdout
-		go func() {
-			for scanner.Scan() {
-				fmt.Printf(scanner.Text())
-			}
-		}()
-
-	}
+	// stdin for hponcfg
+	cmd.Stdin = strings.NewReader(xml)
 
 	// syscall magic
 	cmd.SysProcAttr = &syscall.SysProcAttr{
@@ -197,10 +179,7 @@ func FlashFirmware(printToStdout, isILO bool, firmware string) error {
 	}
 
 	// run command
-	cmd.Start()
-
-	// wait for command to complete execution
-	err := cmd.Wait()
+	_, err := cmd.CombinedOutput()
 	if err != nil {
 		return err
 	}
