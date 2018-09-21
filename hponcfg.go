@@ -69,3 +69,35 @@ func GetHPOnCfgBMCXML() ([]byte, error) {
 
 	return out, nil
 }
+
+// FactoryDefaults - resets BMC to factory default config using hponcfg
+func FactoryDefaults() ([]byte, error) {
+
+	// command to run
+	cmd := exec.Command("hponcfg", "-i")
+
+	// stdin for hponcfg, FACTORY_DEFAULTS
+	cmd.Stdin = strings.NewReader(`
+		<RIBCL VERSION="2.0">
+			<LOGIN USER_LOGIN="Administrator" PASSWORD="">
+				<RIB_INFO MODE="write">
+					<FACTORY_DEFAULTS/>
+				</RIB_INFO>
+			</LOGIN>
+		</RIBCL>
+	`)
+
+	// syscall magic
+	cmd.SysProcAttr = &syscall.SysProcAttr{
+		Setpgid:   true,
+		Pdeathsig: syscall.SIGKILL,
+	}
+
+	// run command and capture output
+	out, err := cmd.CombinedOutput()
+	if err != nil {
+		return []byte{}, err
+	}
+
+	return out, nil
+}
