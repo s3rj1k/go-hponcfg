@@ -518,3 +518,197 @@ type GetEmbeddedHealthData struct {
 		DiscoveryStatus *DiscoveryStatus `xml:"DISCOVERY_STATUS,omitempty"`
 	} `xml:"STORAGE,omitempty"`
 }
+
+// GetNetworkSettings - network settings details
+type GetNetworkSettings struct {
+	XMLName   xml.Name `xml:"GET_NETWORK_SETTINGS,omitempty"`
+	EnableNIC struct {
+		Value string `xml:"VALUE,attr,omitempty"`
+	} `xml:"ENABLE_NIC,omitempty"`
+	SharedNetworkPort struct {
+		Value string `xml:"VALUE,attr,omitempty"`
+	} `xml:"SHARED_NETWORK_PORT,omitempty"`
+	VlanEnabled struct {
+		Value string `xml:"VALUE,attr,omitempty"`
+	} `xml:"VLAN_ENABLED,omitempty"`
+	VlanID struct {
+		Value string `xml:"VALUE,attr,omitempty"`
+	} `xml:"VLAN_ID,omitempty"`
+	SpeedAutoSelect struct {
+		Value string `xml:"VALUE,attr,omitempty"`
+	} `xml:"SPEED_AUTOSELECT,omitempty"`
+	NICSpeed struct {
+		Value string `xml:"VALUE,attr,omitempty"`
+	} `xml:"NIC_SPEED,omitempty"`
+	FullDuplex struct {
+		Value string `xml:"VALUE,attr,omitempty"`
+	} `xml:"FULL_DUPLEX,omitempty"`
+	DHCPEnable struct {
+		Value string `xml:"VALUE,attr,omitempty"`
+	} `xml:"DHCP_ENABLE,omitempty"`
+	DHCPGateway struct {
+		Value string `xml:"VALUE,attr,omitempty"`
+	} `xml:"DHCP_GATEWAY,omitempty"`
+	DHCPDNSServer struct {
+		Value string `xml:"VALUE,attr,omitempty"`
+	} `xml:"DHCP_DNS_SERVER,omitempty"`
+	DHCPWINSServer struct {
+		Value string `xml:"VALUE,attr,omitempty"`
+	} `xml:"DHCP_WINS_SERVER,omitempty"`
+	DHCPStaticRoute struct {
+		Value string `xml:"VALUE,attr,omitempty"`
+	} `xml:"DHCP_STATIC_ROUTE,omitempty"`
+	DHCPDomainName struct {
+		Value string `xml:"VALUE,attr,omitempty"`
+	} `xml:"DHCP_DOMAIN_NAME,omitempty"`
+	DHCPSNTPSettings struct {
+		Value string `xml:"VALUE,attr,omitempty"`
+	} `xml:"DHCP_SNTP_SETTINGS,omitempty"`
+	RegWINSServer struct {
+		Value string `xml:"VALUE,attr,omitempty"`
+	} `xml:"REG_WINS_SERVER,omitempty"`
+	RegDDNSServer struct {
+		Value string `xml:"VALUE,attr,omitempty"`
+	} `xml:"REG_DDNS_SERVER,omitempty"`
+	PingGateway struct {
+		Value string `xml:"VALUE,attr,omitempty"`
+	} `xml:"PING_GATEWAY,omitempty"`
+	MACAddress struct {
+		Value string `xml:"VALUE,attr,omitempty"`
+	} `xml:"MAC_ADDRESS,omitempty"`
+	IPAddress struct {
+		Value string `xml:"VALUE,attr,omitempty"`
+	} `xml:"IP_ADDRESS,omitempty"`
+	SubnetMask struct {
+		Value string `xml:"VALUE,attr,omitempty"`
+	} `xml:"SUBNET_MASK,omitempty"`
+	GatewayIPAddress struct {
+		Value string `xml:"VALUE,attr,omitempty"`
+	} `xml:"GATEWAY_IP_ADDRESS,omitempty"`
+	DNSName struct {
+		Value string `xml:"VALUE,attr,omitempty"`
+	} `xml:"DNS_NAME,omitempty"`
+	DomainName struct {
+		Value string `xml:"VALUE,attr,omitempty"`
+	} `xml:"DOMAIN_NAME,omitempty"`
+	PrimDNSServer struct {
+		Value string `xml:"VALUE,attr,omitempty"`
+	} `xml:"PRIM_DNS_SERVER,omitempty"`
+	SecDNSServer struct {
+		Value string `xml:"VALUE,attr,omitempty"`
+	} `xml:"SEC_DNS_SERVER,omitempty"`
+	TerDNSServer struct {
+		Value string `xml:"VALUE,attr,omitempty"`
+	} `xml:"TER_DNS_SERVER,omitempty"`
+	PrimWINSServer struct {
+		Value string `xml:"VALUE,attr,omitempty"`
+	} `xml:"PRIM_WINS_SERVER,omitempty"`
+	SecWINSServer struct {
+		Value string `xml:"VALUE,attr,omitempty"`
+	} `xml:"SEC_WINS_SERVER,omitempty"`
+	SNTPServer1 struct {
+		Value string `xml:"VALUE,attr,omitempty"`
+	} `xml:"SNTP_SERVER1,omitempty"`
+	SNTPServer2 struct {
+		Value string `xml:"VALUE,attr,omitempty"`
+	} `xml:"SNTP_SERVER2,omitempty"`
+	Timezone struct {
+		Value string `xml:"VALUE,attr,omitempty"`
+	} `xml:"TIMEZONE,omitempty"`
+	StaticRoute1 struct {
+		Dest    string `xml:"DEST,attr,omitempty"`
+		Mask    string `xml:"MASK,attr,omitempty"`
+		Gateway string `xml:"GATEWAY,attr,omitempty"`
+	} `xml:"STATIC_ROUTE_1,omitempty"`
+	StaticRoute2 struct {
+		Dest    string `xml:"DEST,attr,omitempty"`
+		Mask    string `xml:"MASK,attr,omitempty"`
+		Gateway string `xml:"GATEWAY,attr,omitempty"`
+	} `xml:"STATIC_ROUTE_2,omitempty"`
+	StaticRoute3 struct {
+		Dest    string `xml:"DEST,attr,omitempty"`
+		Mask    string `xml:"MASK,attr,omitempty"`
+		Gateway string `xml:"GATEWAY,attr,omitempty"`
+	} `xml:"STATIC_ROUTE_3,omitempty"`
+	IPv6Address []struct {
+		Value      string `xml:"VALUE,attr,omitempty"`
+		PrefixLen  string `xml:"PREFIXLEN,attr,omitempty"`
+		AddrSource string `xml:"ADDR_SOURCE,attr,omitempty"`
+		AddrStatus string `xml:"ADDR_STATUS,attr,omitempty"`
+	} `xml:"IPV6_ADDRESS,omitempty"`
+	IPv6StaticRoute1 struct {
+		IPv6Dest    string `xml:"IPV6_DEST,attr,omitempty"`
+		PrefixLen   string `xml:"PREFIXLEN,attr,omitempty"`
+		IPv6Gateway string `xml:"IPV6_GATEWAY,attr,omitempty"`
+		AddrStatus  string `xml:"ADDR_STATUS,attr,omitempty"`
+	} `xml:"IPV6_STATIC_ROUTE_1,omitempty"`
+	IPv6StaticRoute2 struct {
+		IPv6Dest    string `xml:"IPV6_DEST,attr,omitempty"`
+		PrefixLen   string `xml:"PREFIXLEN,attr,omitempty"`
+		IPv6Gateway string `xml:"IPV6_GATEWAY,attr,omitempty"`
+		AddrStatus  string `xml:"ADDR_STATUS,attr,omitempty"`
+	} `xml:"IPV6_STATIC_ROUTE_2,omitempty"`
+	IPv6StaticRoute3 struct {
+		IPv6Dest    string `xml:"IPV6_DEST,attr,omitempty"`
+		PrefixLen   string `xml:"PREFIXLEN,attr,omitempty"`
+		IPv6Gateway string `xml:"IPV6_GATEWAY,attr,omitempty"`
+		AddrStatus  string `xml:"ADDR_STATUS,attr,omitempty"`
+	} `xml:"IPV6_STATIC_ROUTE_3,omitempty"`
+	IPv6PrimDNSServer struct {
+		Value string `xml:"VALUE,attr,omitempty"`
+	} `xml:"IPV6_PRIM_DNS_SERVER,omitempty"`
+	IPv6SecDNSServer struct {
+		Value string `xml:"VALUE,attr,omitempty"`
+	} `xml:"IPV6_SEC_DNS_SERVER,omitempty"`
+	IPv6TerDNSServer struct {
+		Value string `xml:"VALUE,attr,omitempty"`
+	} `xml:"IPV6_TER_DNS_SERVER,omitempty"`
+	IPv6DefaultGateway struct {
+		Value string `xml:"VALUE,attr,omitempty"`
+	} `xml:"IPV6_DEFAULT_GATEWAY,omitempty"`
+	IPv6PreferredProtocol struct {
+		Value string `xml:"VALUE,attr,omitempty"`
+	} `xml:"IPV6_PREFERRED_PROTOCOL,omitempty"`
+	IPv6AddrAutocfg struct {
+		Value string `xml:"VALUE,attr,omitempty"`
+	} `xml:"IPV6_ADDR_AUTOCFG,omitempty"`
+	IPv6RegDDNSServer struct {
+		Value string `xml:"VALUE,attr,omitempty"`
+	} `xml:"IPV6_REG_DDNS_SERVER,omitempty"`
+	DHCPv6StatlessEnable struct {
+		Value string `xml:"VALUE,attr,omitempty"`
+	} `xml:"DHCPV6_STATELESS_ENABLE,omitempty"`
+	DHCPv6StatefulEnable struct {
+		Value string `xml:"VALUE,attr,omitempty"`
+	} `xml:"DHCPV6_STATEFUL_ENABLE,omitempty"`
+	DHCPv6RapidCommit struct {
+		Value string `xml:"VALUE,attr,omitempty"`
+	} `xml:"DHCPV6_RAPID_COMMIT,omitempty"`
+	DHCPv6DomainName struct {
+		Value string `xml:"VALUE,attr,omitempty"`
+	} `xml:"DHCPV6_DOMAIN_NAME,omitempty"`
+	DHCPv6SNTPSettings struct {
+		Value string `xml:"VALUE,attr,omitempty"`
+	} `xml:"DHCPV6_SNTP_SETTINGS,omitempty"`
+	DHCPv6DNSServer struct {
+		Value string `xml:"VALUE,attr,omitempty"`
+	} `xml:"DHCPV6_DNS_SERVER,omitempty"`
+	ILONICAutoSelect struct {
+		Value string `xml:"VALUE,attr,omitempty"`
+	} `xml:"ILO_NIC_AUTO_SELECT,omitempty"`
+	ILONICAutoSNPScan struct {
+		Value string `xml:"VALUE,attr,omitempty"`
+	} `xml:"ILO_NIC_AUTO_SNP_SCAN,omitempty"`
+	ILONICAutoDelay struct {
+		Value string `xml:"VALUE,attr,omitempty"`
+	} `xml:"ILO_NIC_AUTO_DELAY,omitempty"`
+	ILONICFailOver struct {
+		Value string `xml:"VALUE,attr,omitempty"`
+	} `xml:"ILO_NIC_FAIL_OVER,omitempty"`
+	ILONICFailOverDelay struct {
+		Value string `xml:"VALUE,attr,omitempty"`
+	} `xml:"ILO_NIC_FAIL_OVER_DELAY,omitempty"`
+	SNPPort struct {
+		Value string `xml:"VALUE,attr,omitempty"`
+	} `xml:"SNP_PORT,omitempty"`
+}
