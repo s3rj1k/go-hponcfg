@@ -7,7 +7,28 @@ import (
 	"os/exec"
 	"strings"
 	"syscall"
+	"time"
 )
+
+// GenericHPOnCfgWrapper - wrapper for HPOnCfg RO functions to circumvent stuck BMC
+func GenericHPOnCfgWrapper(f func() ([]byte, error), retries int) ([]byte, error) {
+
+	// try multiple times, (BMC bug?)
+	for i := 0; i < retries; i++ {
+
+		// cooldown
+		time.Sleep(3 * time.Second)
+
+		// get data from hponconfig
+		data, err := f()
+		if err == nil {
+			return data, nil
+		}
+
+	}
+
+	return []byte{}, fmt.Errorf("failed to get data from HPOnCfg multiple times")
+}
 
 // GetHPOnCfgHealthXML - run hponcfg and get GET_EMBEDDED_HEALTH data from STDOUT
 func GetHPOnCfgHealthXML() ([]byte, error) {
