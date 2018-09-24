@@ -11,16 +11,16 @@ import (
 )
 
 // SendXMLToHPOnCfgWrapper - wrapper for SendXMLToHPOnCfg function to circumvent stuck BMC
-func SendXMLToHPOnCfgWrapper(data []byte, retries int) ([]byte, error) {
+func SendXMLToHPOnCfgWrapper(xml []byte, retries int) ([]byte, error) {
 
 	// try multiple times, (BMC bug?)
 	for i := 0; i < retries; i++ {
 
 		// cooldown
-		time.Sleep(3 * time.Second)
+		time.Sleep(5 * time.Second)
 
 		// get data from hponconfig
-		data, err := SendXMLToHPOnCfg(data)
+		data, err := SendXMLToHPOnCfg(xml)
 		if err == nil {
 			return data, nil
 		}
@@ -37,7 +37,7 @@ func GenericHPOnCfgWrapper(f func() ([]byte, error), retries int) ([]byte, error
 	for i := 0; i < retries; i++ {
 
 		// cooldown
-		time.Sleep(3 * time.Second)
+		time.Sleep(5 * time.Second)
 
 		// get data from hponconfig
 		data, err := f()
