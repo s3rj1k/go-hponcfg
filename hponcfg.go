@@ -10,6 +10,26 @@ import (
 	"time"
 )
 
+// SendXMLToHPOnCfgWrapper - wrapper for SendXMLToHPOnCfg function to circumvent stuck BMC
+func SendXMLToHPOnCfgWrapper(data []byte, retries int) ([]byte, error) {
+
+	// try multiple times, (BMC bug?)
+	for i := 0; i < retries; i++ {
+
+		// cooldown
+		time.Sleep(3 * time.Second)
+
+		// get data from hponconfig
+		data, err := SendXMLToHPOnCfg(data)
+		if err == nil {
+			return data, nil
+		}
+
+	}
+
+	return []byte{}, fmt.Errorf("failed to send data to HPOnCfg multiple times")
+}
+
 // GenericHPOnCfgWrapper - wrapper for HPOnCfg RO functions to circumvent stuck BMC
 func GenericHPOnCfgWrapper(f func() ([]byte, error), retries int) ([]byte, error) {
 
