@@ -13,6 +13,9 @@ import (
 // SendXMLToHPOnCfgWrapper - wrapper for SendXMLToHPOnCfg function to circumvent stuck BMC
 func SendXMLToHPOnCfgWrapper(xml []byte, retries int) ([]byte, error) {
 
+	var data []byte
+	var err error
+
 	// try multiple times, (BMC bug?)
 	for i := 0; i < retries; i++ {
 
@@ -20,19 +23,22 @@ func SendXMLToHPOnCfgWrapper(xml []byte, retries int) ([]byte, error) {
 		time.Sleep(5 * time.Second)
 
 		// get data from hponconfig
-		data, err := SendXMLToHPOnCfg(xml)
+		data, err = SendXMLToHPOnCfg(xml)
 		if err == nil {
 			return data, nil
 		}
 
 	}
 
-	return []byte{}, fmt.Errorf("failed to send data to HPOnCfg multiple times")
+	return data, fmt.Errorf("failed to send data to HPOnCfg multiple times")
 }
 
 // GenericHPOnCfgWrapper - wrapper for HPOnCfg RO functions to circumvent stuck BMC
 func GenericHPOnCfgWrapper(f func() ([]byte, error), retries int) ([]byte, error) {
 
+	var data []byte
+	var err error
+
 	// try multiple times, (BMC bug?)
 	for i := 0; i < retries; i++ {
 
@@ -40,14 +46,14 @@ func GenericHPOnCfgWrapper(f func() ([]byte, error), retries int) ([]byte, error
 		time.Sleep(5 * time.Second)
 
 		// get data from hponconfig
-		data, err := f()
+		data, err = f()
 		if err == nil {
 			return data, nil
 		}
 
 	}
 
-	return []byte{}, fmt.Errorf("failed to get data from HPOnCfg multiple times")
+	return data, fmt.Errorf("failed to get data from HPOnCfg multiple times")
 }
 
 // GetHPOnCfgHealthXML - run hponcfg and get GET_EMBEDDED_HEALTH data from STDOUT
@@ -73,13 +79,8 @@ func GetHPOnCfgHealthXML() ([]byte, error) {
 		Pdeathsig: syscall.SIGKILL,
 	}
 
-	// run command and capture output
-	out, err := cmd.CombinedOutput()
-	if err != nil {
-		return []byte{}, err
-	}
-
-	return out, nil
+	// run command
+	return cmd.CombinedOutput()
 }
 
 // GetHPOnCfgNetworkXML - run hponcfg and get GET_NETWORK_SETTINGS data from STDOUT
@@ -105,13 +106,8 @@ func GetHPOnCfgNetworkXML() ([]byte, error) {
 		Pdeathsig: syscall.SIGKILL,
 	}
 
-	// run command and capture output
-	out, err := cmd.CombinedOutput()
-	if err != nil {
-		return []byte{}, err
-	}
-
-	return out, nil
+	// run command
+	return cmd.CombinedOutput()
 }
 
 // GetHPOnCfgBMCXML - run hponcfg and get GET_FW_VERSION data from STDOUT (only BMC related data)
@@ -137,13 +133,8 @@ func GetHPOnCfgBMCXML() ([]byte, error) {
 		Pdeathsig: syscall.SIGKILL,
 	}
 
-	// run command and capture output
-	out, err := cmd.CombinedOutput()
-	if err != nil {
-		return []byte{}, err
-	}
-
-	return out, nil
+	// run command
+	return cmd.CombinedOutput()
 }
 
 // FactoryDefaults - resets BMC to factory default config using hponcfg
@@ -169,13 +160,8 @@ func FactoryDefaults() ([]byte, error) {
 		Pdeathsig: syscall.SIGKILL,
 	}
 
-	// run command and capture output
-	out, err := cmd.CombinedOutput()
-	if err != nil {
-		return []byte{}, err
-	}
-
-	return out, nil
+	// run command
+	return cmd.CombinedOutput()
 }
 
 // SendXMLToHPOnCfg - resets BMC to factory default config using hponcfg
@@ -193,13 +179,8 @@ func SendXMLToHPOnCfg(data []byte) ([]byte, error) {
 		Pdeathsig: syscall.SIGKILL,
 	}
 
-	// run command and capture output
-	out, err := cmd.CombinedOutput()
-	if err != nil {
-		return []byte{}, err
-	}
-
-	return out, nil
+	// run command
+	return cmd.CombinedOutput()
 }
 
 // FlashFirmware - flashes firmware using hponcfg
