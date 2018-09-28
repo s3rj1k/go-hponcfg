@@ -17,8 +17,11 @@ func GetHealthData(data []byte) (GetEmbeddedHealthData, error) {
 	data = regexp.MustCompile("(?i)<INDEX_[0-9]+>").ReplaceAllLiteral(data, []byte("<INDEX>"))
 	data = regexp.MustCompile("(?i)</INDEX_[0-9]+>").ReplaceAllLiteral(data, []byte("</INDEX>"))
 
-	// replace non-ASCII symbols with space
+	// replace non-ASCII characters with space
 	data = regexp.MustCompile("[[:^ascii:]]").ReplaceAllLiteral(data, []byte(" "))
+
+	// replace control characters with space
+	data = regexp.MustCompile("[[:cntrl:]]").ReplaceAllLiteral(data, []byte(" "))
 
 	err := xml.Unmarshal(data, &healthData)
 	if err != nil {

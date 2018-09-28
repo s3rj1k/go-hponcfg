@@ -10,8 +10,11 @@ func GetNetworkData(data []byte) (GetNetworkSettings, error) {
 
 	var networkData GetNetworkSettings
 
-	// replace non-ASCII symbols with space
+	// replace non-ASCII characters with space
 	data = regexp.MustCompile("[[:^ascii:]]").ReplaceAllLiteral(data, []byte(" "))
+
+	// replace control characters with space
+	data = regexp.MustCompile("[[:cntrl:]]").ReplaceAllLiteral(data, []byte(" "))
 
 	err := xml.Unmarshal(data, &networkData)
 	if err != nil {
