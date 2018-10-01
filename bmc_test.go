@@ -10,6 +10,7 @@ func TestGetBMCData(t *testing.T) {
 
 	// data to process
 	data := []byte(`
+		THIS IS TEST GARBAGE
 		<GET_FW_VERSION
 			FIRMWARE_VERSION = "2.55"
 			FIRMWARE_DATE = "Aug 16 2017"
@@ -17,6 +18,8 @@ func TestGetBMCData(t *testing.T) {
 			LICENSE_TYPE = "iLO Advanced"
 		/>
 	`)
+
+	data = append(data, byte(0x13), byte(0x14), byte(0xF0), byte(0x9F), byte(0x98), byte(0x82))
 
 	// parse data
 	bmc1, err := GetBMCData(data)

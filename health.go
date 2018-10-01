@@ -13,17 +13,12 @@ func GetHealthData(data []byte) (GetEmbeddedHealthData, error) {
 
 	var healthData GetEmbeddedHealthData
 
-	// fix XML tags in firmware section for proper unmarshalling
-	data = regexp.MustCompile("(?i)<INDEX_[0-9]+>").ReplaceAllLiteral(data, []byte("<INDEX>"))
-	data = regexp.MustCompile("(?i)</INDEX_[0-9]+>").ReplaceAllLiteral(data, []byte("</INDEX>"))
+	clean, err := SanitizeHPOnCfgXML(data)
+	if err != nil {
+		return GetEmbeddedHealthData{}, err
+	}
 
-	// replace non-ASCII characters with space
-	data = regexp.MustCompile("[[:^ascii:]]").ReplaceAllLiteral(data, []byte(" "))
-
-	// replace control characters with space
-	data = regexp.MustCompile("[[:cntrl:]]").ReplaceAllLiteral(data, []byte(" "))
-
-	err := xml.Unmarshal(data, &healthData)
+	err = xml.Unmarshal(clean, &healthData)
 	if err != nil {
 		return GetEmbeddedHealthData{}, err
 	}

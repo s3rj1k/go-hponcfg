@@ -2,7 +2,6 @@ package hponcfg
 
 import (
 	"encoding/xml"
-	"regexp"
 )
 
 // GetNetworkData - process network output of hponcfg
@@ -10,13 +9,12 @@ func GetNetworkData(data []byte) (GetNetworkSettings, error) {
 
 	var networkData GetNetworkSettings
 
-	// replace non-ASCII characters with space
-	data = regexp.MustCompile("[[:^ascii:]]").ReplaceAllLiteral(data, []byte(" "))
+	clean, err := SanitizeHPOnCfgXML(data)
+	if err != nil {
+		return GetNetworkSettings{}, err
+	}
 
-	// replace control characters with space
-	data = regexp.MustCompile("[[:cntrl:]]").ReplaceAllLiteral(data, []byte(" "))
-
-	err := xml.Unmarshal(data, &networkData)
+	err = xml.Unmarshal(clean, &networkData)
 	if err != nil {
 		return GetNetworkSettings{}, err
 	}

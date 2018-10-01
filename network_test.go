@@ -110,6 +110,8 @@ func TestGetNetworkData(t *testing.T) {
 		</GET_NETWORK_SETTINGS>
 	`)
 
+	data = append(data, byte(0x13), byte(0x14), byte(0xF0), byte(0x9F), byte(0x98), byte(0x82))
+
 	// parse data
 	network1, err := GetNetworkData(data)
 	if err != nil {

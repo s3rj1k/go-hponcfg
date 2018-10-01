@@ -11,6 +11,7 @@ func TestGetHealthData(t *testing.T) {
 
 	// data to process
 	data := []byte(`
+		THIS IS TEST GARBAGE
 		<GET_EMBEDDED_HEALTH_DATA>
 			<PROCESSORS>
 				<PROCESSOR>
@@ -1099,6 +1100,8 @@ func TestGetHealthData(t *testing.T) {
 			</STORAGE>
 		</GET_EMBEDDED_HEALTH_DATA>
 	`)
+
+	data = append(data, byte(0x13), byte(0x14), byte(0xF0), byte(0x9F), byte(0x98), byte(0x82))
 
 	// parse data
 	health1, err := GetHealthData(data)
